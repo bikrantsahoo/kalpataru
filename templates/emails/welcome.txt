@@ -1,0 +1,4 @@
+Welcome to Our App
+
+Hello {{ user.username }},
+Thank you for joining our app.

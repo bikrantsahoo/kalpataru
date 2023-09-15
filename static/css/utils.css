@@ -1,0 +1,16 @@
+/* this is used to align search bars etc  */
+
+.center {
+  display: flex;
+  justify-content: left;
+  padding-left: 10%;
+  padding-top: 5%;
+}
+
+.uppercase{
+  text-transform: uppercase;
+}
+
+.semibold{
+  font-weight: semibold;
+}

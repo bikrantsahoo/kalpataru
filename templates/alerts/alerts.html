@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %} Active Alerts - {% endblock title %}
+{% block body %}
+
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/utils.css') }}">
+
+<div class="center">
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label for="formGroupExampleInput">Example label</label>
+            <input type="text" class="form-control" id="fname" placeholder="Example input placeholder">
+        </div>
+        <br/>
+        <div class="form-group">
+            <label for="formGroupExampleInput2">Another label</label>
+            <input type="text" class="form-control" id="lname" placeholder="Another input placeholder">
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

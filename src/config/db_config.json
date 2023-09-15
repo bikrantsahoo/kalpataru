@@ -1,0 +1,23 @@
+{
+  "database": {
+    "host": "10.193.18.70",
+    "port": "1535",
+    "service_name": "HCMPREPL"
+  },
+  "REPLICA": {
+    "username": "SI_HCMP_REPLICA1",
+    "password": "Gdn9Sf9$2K23"
+  },
+  "DE_DEV": {
+    "username": "HCMP_DE_DEV",
+    "password": "Gdn9Ef$2K23"
+  },
+  "PROCESS_CONF": {
+    "username": "HCMP_PROCESS_CONF",
+    "password": "Gdn99spD$2K23"
+  },
+  "SECURITY": {
+    "username": "HCMP_SECURITY_SERVICE",
+    "password": "K12bgmj8#t"
+  }
+}

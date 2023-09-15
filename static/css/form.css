@@ -1,0 +1,8 @@
+/* this is used to align search bars  */
+
+    .center {
+        display: flex;
+        justify-content: left;
+        padding-left: 10%;
+        padding-top: 5%;
+            }
