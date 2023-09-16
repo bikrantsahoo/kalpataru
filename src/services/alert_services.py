@@ -11,13 +11,15 @@ class AlertServices:
 
     @staticmethod
     def delete_alert(alert_name):
-        db_client = OracleDBClient(user=DbUser.HCMP_REPLICA1.value)
+        db_client = OracleDBClient(user="DE_DEV")
         if db_client.connect():
-            query = f"DELETE FROM alerts WHERE name = '{alert_name}'"
-            # query = "select * from HCMP_DE_DEV.HCMP_SUBS_MASTER"
-            success = db_client.execute_query(query)
+            query = f"SELECT * FROM HCMP_SUBS_MASTER"
+            #query = "select * from HCMP_DE_DEV.HCMP_SUBS_MASTER"
+            db_client.execute_query(query)
+            results = db_client.fetch_results(query)
+            print(results)
             db_client.disconnect()
-            return success
+            return True
         else:
             return False
 

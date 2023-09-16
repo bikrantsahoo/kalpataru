@@ -14,8 +14,8 @@ class OracleDBClient:
                 service_name='HCMPREPL'
             )
             self.connection = cx_Oracle.connect(
-                user='SI_HCMP_REPLICA1',
-                password='Gdn9Sf9$2K23',
+                user='HCMP_DE_DEV',
+                password='Gdn9Ef$2K23',
                 dsn=dns_tns
             )
             return True

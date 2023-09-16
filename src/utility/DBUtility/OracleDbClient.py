@@ -15,7 +15,7 @@ class OracleDBClient:
             dns_tns = cx_Oracle.makedsn(
                 host=db_config.get('host'),
                 port=db_config.get('port'),
-                service_name=db_config.get('db_name')
+                service_name=db_config.get('service_name')
             )
             self.connection = cx_Oracle.connect(
                 user=user_config.get('username'),
@@ -39,7 +39,7 @@ class OracleDBClient:
             cursor = self.connection.cursor()
             cursor.execute(query)
             self.connection.commit()
-            cursor.close()
+            #cursor.close()
             return True
         except cx_Oracle.DatabaseError as e:
             print(f"Error executing query: {e}")
@@ -47,8 +47,8 @@ class OracleDBClient:
         finally:
             if cursor:
                 cursor.close()
-            if self.connection:
-                self.connection.close()
+            # if self.connection:
+            #     self.connection.close()
 
     def fetch_results(self, query):
         cursor = None
@@ -56,7 +56,7 @@ class OracleDBClient:
             cursor = self.connection.cursor()
             cursor.execute(query)
             results = cursor.fetchall()
-            cursor.close()
+            # cursor.close()
             return results
         except cx_Oracle.DatabaseError as e:
             print(f"Error fetching results: {e}")
@@ -64,5 +64,5 @@ class OracleDBClient:
         finally:
             if cursor:
                 cursor.close()
-            if self.connection:
-                self.connection.close()
+            # if self.connection:
+            #     self.connection.close()

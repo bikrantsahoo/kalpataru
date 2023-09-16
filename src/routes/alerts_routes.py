@@ -3,7 +3,7 @@ from flask_wtf import FlaskForm
 from wtforms.validators import DataRequired
 from wtforms import StringField, SubmitField
 
-# from src.services.alert_services import AlertServices
+from src.services.alert_services import AlertServices
 
 alert_bp = Blueprint("alerts", __name__)
 
@@ -38,11 +38,11 @@ def delete_alert():
             flash("recheck the alert name", "warning")
             return redirect("/delete_alert")
 
-        # alert_status = AlertServices().delete_alert(alert_name=alert_name)
-        alert_status = "danger"
+        alert_status = AlertServices.delete_alert(alert_name=alert_name)
+        #alert_status = "danger"
         if alert_status:
             # ToDo: flash may not work
-            flash(f"Alert {alert_name} alert_status", alert_status)
+            flash(f"Deleted {alert_name} successfully", "success")
         else:
-            flash("Alert  ", alert_status)
+            flash(f"Failed to delete Alert {alert_name}  ", "danger")
     return render_template('alerts/delete.html', name=name, form=form)
