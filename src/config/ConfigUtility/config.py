@@ -1,5 +1,5 @@
 import json
-import os
+
 
 # TODO: better add class for  more configs
 def load_db_config(user):
