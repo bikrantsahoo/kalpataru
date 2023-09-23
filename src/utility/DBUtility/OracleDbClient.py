@@ -38,6 +38,7 @@ class OracleDBClient:
         try:
             cursor = self.connection.cursor()
             cursor.execute(query)
+            #TODO: is commit required
             self.connection.commit()
             # cursor.close()
             return True

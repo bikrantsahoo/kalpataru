@@ -1,6 +1,6 @@
 from src.utility.DBUtility.OracleDbClient import OracleDBClient
 from src.enums.DbUserEnums import DbUser
-from string import Template
+from src.services.load_sql_service import load_sql_query
 from src.constants import constants
 
 
@@ -19,16 +19,16 @@ class AlertServices:
     #             query = query.format(**params)
     #         return query
 
-    @staticmethod
-    def load_sql_query(file_path, params=None):
-        with open(file_path, 'r') as file:
-            query = file.read()
-            if params:
-                template = Template(query)
-                query = template.safe_substitute(params)
-                # TODO: instead of template try to work on below
-                # query = query.format(**params)
-            return query
+    # @staticmethod
+    # def load_sql_query(file_path, params=None):
+    #     with open(file_path, 'r') as file:
+    #         query = file.read()
+    #         if params:
+    #             template = Template(query)
+    #             query = template.safe_substitute(params)
+    #             # TODO: instead of template try to work on below
+    #             # query = query.format(**params)
+    #         return query
 
     @staticmethod
     def delete_alert(alert_name):
@@ -36,9 +36,9 @@ class AlertServices:
         if db_client.connect():
             if AlertServices.is_alert_present(alert_name, db_client):
                 params = {"alert_name": alert_name}
-                query = AlertServices.load_sql_query(constants.UPDATE_ALERT_PATH, params)
+                query = load_sql_query(constants.UPDATE_ALERT_PATH, params)
                 print(query)
-                #TODO: after testing replace it with update query
+                # TODO: after testing replace it with update query
                 db_client.execute_query(query)
                 db_client.disconnect()
                 return True
@@ -62,7 +62,7 @@ class AlertServices:
     @staticmethod
     def is_alert_present(alert_name, db_client):
         params = {"alert_name": alert_name}
-        query = AlertServices.load_sql_query(constants.SELECT_ALERT_PATH, params)
+        query = load_sql_query(constants.SELECT_ALERT_PATH, params)
         print(query)
         db_client.execute_query(query)
         count = db_client.fetch_results(query)

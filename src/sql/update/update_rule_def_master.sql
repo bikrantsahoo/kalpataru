@@ -1,0 +1,1 @@
+UPDATE pls_rule_mst SET UPDATED_ON = SYSDATE , STATUS  = 'N' WHERE RULE_ID IN ('$rule_ids')

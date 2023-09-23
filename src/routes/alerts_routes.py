@@ -14,11 +14,11 @@ def active_alert():
 
 @alert_bp.route("/delete_alert", methods=["GET", "POST"])
 def delete_alert():
-    # name = None
+    name = None
     form = DeleteAlertForm()
     if form.validate_on_submit():
-        # name = form.name.data
-        # form.name.data = ''
+        name = form.name.data
+        form.name.data = ''
         if request.method == "POST":
             alert_name = request.form.get("name")
             print(alert_name)
@@ -31,4 +31,4 @@ def delete_alert():
                 flash(f"Deleted {alert_name} successfully", constants.SUCCESS)
             else:
                 flash(f"Failed to delete Alert {alert_name} ", constants.ERROR)
-    return render_template('alerts/delete.html', form=form)
+    return render_template('alerts/delete.html', name=name, form=form)
