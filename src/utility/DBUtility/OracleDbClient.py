@@ -1,5 +1,5 @@
 import cx_Oracle
-from src.config.ConfigUtility.config import load_db_config
+from src.config.config import load_db_config
 
 
 class OracleDBClient:
