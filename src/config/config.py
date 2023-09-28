@@ -7,6 +7,7 @@ from src.constants import constants
 def load_db_config(user):
     # current_dir = os.path.dirname("/config/db_config.json")
     # json_file_path = os.path.join(current_dir, '..', 'db_config.json')
+    print(os.getcwd())
     config_data = None
     try:
         if os.path.exists(constants.DB_CONFIG_PATH):

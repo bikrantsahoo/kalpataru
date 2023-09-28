@@ -10,12 +10,12 @@ class UserService:
         db_client = OracleDBClient(user="REPLICA")
         if db_client.connect():
             if UserService.is_customer_present(db_client, customer_id):
-                params = {"cont_value1": mobile_number}
-                query = load_sql_query(constants.UPDATE_ALERT_PATH, params)
+                params = {"mobile_number": mobile_number, 'customer_id' : customer_id}
+                query = load_sql_query(constants.UPDATE_MOB_NUM_PATH, params)
                 print(query)
                 # TODO: after testing replace it with update query
-                #db_client.execute_query(query)
-                #db_client.disconnect()
+                db_client.execute_query(query)
+                db_client.disconnect()
                 return True
             else:
                 db_client.disconnect()
