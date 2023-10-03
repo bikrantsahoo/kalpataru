@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash
+from flask import Blueprint, render_template, request, flash, redirect
 from src.routes.forms.mobile_form import ModifyMobileNumber
 
 from src.services.user_services import UserService
@@ -15,11 +15,13 @@ def create_user():
 @user_bp.route("/modify_user", methods=["GET", "POST"])
 def modify_user():
     if request.method == 'POST':
-        selected_action = request.form['users']
+        selected_action = request.form['action']
         if selected_action == constants.MOBILE_NUMBER:
             form = ModifyMobileNumber()
             return render_template('users/modify_mobile_number.html',
                                    name=None, mobile_number=None, form=form)
+        if selected_action == constants.ROLES:
+            return render_template('users/modify_roles.html')
         if selected_action == constants.EMAIL:
             return render_template('users/modify_email.html')
         if selected_action == constants.DEPARTMENT:

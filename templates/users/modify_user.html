@@ -5,11 +5,12 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/selectform.css') }}">
 
 <div class="center">
-    <form method="POST" >
-        <select name="users" id="users">
-            <option name="action" value="mobile_number">Mobile Number</option>
-            <option name="action" value="email">Email</option>
-            <option name="action" value="department">Department</option>
+    <form method="POST" action="{{ url_for('users.modify_user') }}">
+        <select name="action" id="users">
+            <option value="mobile_number">Mobile Number</option>
+            <option value="email">Email</option>
+            <option value="department">Department</option>
+            <option value="roles">Assign Roles</option>
         </select>
         <input type="submit" value="Go">
     </form>
