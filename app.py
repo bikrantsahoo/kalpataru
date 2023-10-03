@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from src.routes import index, user_routes, alerts_routes, rules_routes
+from src.routes import index, user_routes, alerts_routes, rules_routes, de_routes
 import os
 
 app = Flask(__name__)
@@ -27,6 +27,8 @@ def page_not_found(e):
 app.register_blueprint(alerts_routes.alert_bp)
 app.register_blueprint(user_routes.user_bp)
 app.register_blueprint(rules_routes.rule_bp)
+app.register_blueprint(de_routes.de_bp)
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0',debug=True)

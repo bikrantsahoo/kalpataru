@@ -1,7 +1,9 @@
+from src.services.notitification_service import send_email
 from src.utility.DBUtility.OracleDbClient import OracleDBClient
 from src.enums.DbUserEnums import DbUser
 from src.services.load_sql_service import load_sql_query
 from src.constants import constants
+from flask import render_template
 
 
 class AlertServices:
@@ -41,6 +43,13 @@ class AlertServices:
                 # TODO: after testing replace it with update query
                 db_client.execute_query(query)
                 db_client.disconnect()
+                email_message_template = render_template('email/simple_email_template.html',
+                                                         subject=constants.ALERT_MAIL_SUBJECT.format(alert_name),
+                                                         message=alert_name)
+
+                send_email(constants.RECIPIENT_MAIL,
+                           constants.ALERT_MAIL_SUBJECT.format(alert_name), email_message_template)
+
                 return True
             else:
                 db_client.disconnect()
