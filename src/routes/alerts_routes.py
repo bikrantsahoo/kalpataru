@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, flash, redirect
 from src.routes.forms.delete_form import DeleteAlertForm
+from src.services.notitification_service import send_email
 
 from src.services.alert_services import AlertServices
 from src.constants import constants
@@ -20,15 +21,15 @@ def delete_alert():
         name = form.name.data
         form.name.data = ''
         if request.method == "POST":
-            alert_name = request.form.get("name")
-            print(alert_name)
+            alert_names = request.form.get("name")
+            print(alert_names)
             # TODO: check and remove this condition check after few days
-            if len(alert_name) <= constants.ALERT_SIZE:
+            if len(alert_names) <= constants.ALERT_SIZE:
                 flash("recheck the alert name", constants.WARNING)
                 return redirect("/delete_alert")
-            alert_status = AlertServices.delete_alert(alert_name=alert_name)
+            alert_status = AlertServices.delete_alert(alert_names=alert_names)
             if alert_status:
-                flash(f"Deleted {alert_name} successfully", constants.SUCCESS)
+                flash(f"Deleted {alert_names} successfully", constants.SUCCESS)
             else:
-                flash(f"Failed to delete Alert {alert_name} ", constants.ERROR)
+                flash(f"Failed to delete Alert {alert_names} ", constants.ERROR)
     return render_template('alerts/delete.html', name=name, form=form)

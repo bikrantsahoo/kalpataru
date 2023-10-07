@@ -9,6 +9,6 @@ class RuleForm(FlaskForm):
         if len(field.data.split(',')) > constants.MAX_RULE_ALLOWED:
             raise ValidationError(f"Exceeded the limit of {constants.MAX_RULE_ALLOWED} rule names.")
 
-    name = StringField("Rule Name", render_kw={'placeholder': 'Enter multiple Rule names in comma separated'},
+    name = StringField("Rule Name", render_kw={'placeholder': constants.DISPLAY_RULE_MSG},
                        validators=[DataRequired(), validate_rule_inputs])
     submit = SubmitField("submit")

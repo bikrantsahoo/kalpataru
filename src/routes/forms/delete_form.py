@@ -12,6 +12,10 @@ class DeleteAlertForm(FlaskForm):
     #     if len(alert_names) > max_inputs:
     #         raise ValidationError(f"Exceeded the limit of {max_inputs} alert names.")
     #
+    def validate_alert_inputs(form, field):
+        if len(field.data.split(',')) > constants.MAX_ALERT_ALLOWED:
+            raise ValidationError(f"Exceeded the limit of {constants.MAX_ALERT_ALLOWED} alert names.")
+
     name = StringField("Alert Name", render_kw={'placeholder': constants.DISPLAY_ALERT_MSG},
-                       validators=[DataRequired()])
+                       validators=[DataRequired(), validate_alert_inputs])
     submit = SubmitField("submit")
