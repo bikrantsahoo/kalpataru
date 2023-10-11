@@ -26,7 +26,7 @@ class DeServices:
                     query = load_sql_query(constants.UPDATE_DE_DISABLE_PATH, params)
                     print(query)
                     # TODO: after testing replace it with update query
-                    # db_client.execute_query(query)
+                    db_client.execute_query(query)
                     db_client.disconnect()
                     return True
                 else:
