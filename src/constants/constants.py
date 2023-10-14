@@ -1,6 +1,7 @@
 SELECT_ALERT_PATH = "src/sql/select/select_alert.sql"
 SELECT_RULE_PATH = "src/sql/select/select_rule.sql"
 SELECT_CUSTOMER_PATH = "src/sql/select/select_customer.sql"
+SELECT_JOB_HISTORY_PATH = "src/sql/select/select_job_history.sql"
 UPDATE_RULE_PATH = "src/sql/update/update_rule.sql"
 UPDATE_RULE_MASTER_PATH = "src/sql/update/update_rule_def_master.sql"
 UPDATE_ALERT_PATH = "src/sql/update/update_alert.sql"

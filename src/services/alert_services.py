@@ -40,7 +40,7 @@ class AlertServices:
 
 
 def is_alert_present(alert_name, db_client):
-    query = ""
+    global query
     params = {"alert_name": alert_name}
     query = load_sql_query(constants.SELECT_ALERT_PATH, params)
     print(query)

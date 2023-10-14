@@ -13,6 +13,7 @@ class RuleServices:
             if db_client.connect():
                 for rule_name in rule_names:
                     rule_name = rule_name.strip()
+                    global query
                     params = {"rule_name": rule_name}
                     query = load_sql_query(constants.SELECT_RULE_PATH, params)
                     results = db_client.fetch_results(query)

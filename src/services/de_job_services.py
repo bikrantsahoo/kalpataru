@@ -14,7 +14,7 @@ class DeServices:
                 job_result_ids = []
                 for job_id in job_ids:
                     job_id = job_id.strip()
-                    if is_job_present(job_id, db_client):
+                    if DeServices.is_job_present(job_id, db_client):
                         job_result_ids.append(job_id)
                 if job_result_ids:
                     print(job_result_ids)
@@ -38,11 +38,41 @@ class DeServices:
             print(f"Error: {str(e)}")
             return False
 
+    def is_job_present(job_instance_id, db_client):
+        params = {"job_instance_id": job_instance_id}
+        query = load_sql_query(constants.SELECT_DE_DISABLE_PATH, params)
+        print(query)
+        db_client.execute_query(query)
+        count = db_client.fetch_results(query)
+        return len(count) > 0
 
-def is_job_present(job_instance_id, db_client):
-    params = {"job_instance_id": job_instance_id}
-    query = load_sql_query(constants.SELECT_DE_DISABLE_PATH, params)
-    print(query)
-    db_client.execute_query(query)
-    count = db_client.fetch_results(query)
-    return len(count) > 0
+    @staticmethod
+    def get_job_histories(job_instance_id):
+        db_client = OracleDBClient(user="DE_DEV")
+        if db_client.connect():
+            print("i am here")
+            global query
+            params = {"job_instance_id": job_instance_id}
+            try:
+                query = load_sql_query(constants.SELECT_JOB_HISTORY_PATH, params)
+                print(query)
+                db_client.execute_query(query)
+                job_histories = db_client.fetch_results(query)
+                job_histories_data = []
+                for job_history in job_histories:
+                    job_history_data = {
+                        "start_time": job_history[0].strftime("%Y-%m-%d %H:%M:%S"),
+                        "end_time": job_history[1].strftime("%Y-%m-%d %H:%M:%S"),
+                        "status": job_history[2]
+                    }
+                    job_histories_data.append(job_history_data)
+                print(job_histories_data)
+                return job_histories_data
+            except Exception as e:
+                print(f"Error: {str(e)}")
+                return []
+            finally:
+                db_client.disconnect()
+
+        else:
+            return []
