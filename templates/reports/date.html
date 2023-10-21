@@ -1,0 +1,55 @@
+{% extends 'base.html'%}
+{% block title %} Reports  - {% endblock title %}
+{% block body %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/utils.css') }}">
+
+
+<div class="center">
+    <form method='POST'>
+
+        <h5> select a date range </h5>
+        <p>
+        </p>
+
+            {{ form.csrt_token }}
+            {{ form.startdate.label }} {{form.startdate(class='datepicker')}} {{form.hidden_tag()}}
+            {{ form.enddate.label }} {{form.enddate(class='datepicker')}} {{form.hidden_tag()}}
+        <p>
+            <p>
+            {{form.submit(class="btn btn-secondary")}}
+        </p>
+    </form>
+</div>
+
+{% if milestones_data %}
+<div class="center">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Order Number</th>
+            <th>Milestone</th>
+            <th>Error Message</th>
+            <th>Module</th>
+            <th>T2R Id</th>
+            <th>Created On</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for milestone_data in milestones_data %}
+        <tr>
+            <td>{{ milestone_data.order_number }}</td>
+            <td>{{ milestone_data.milestone }}</td>
+            <td>{{ milestone_data.error_message }}</td>
+            <td>{{ milestone_data.module }}</td>
+            <td>{{ milestone_data.t2r_id }}</td>
+            <td>{{ milestone_data.created_on }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+
+{% endblock %}

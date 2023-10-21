@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from src.routes import index, user_routes, alerts_routes, rules_routes, de_routes
+from src.routes import index, user_routes, alerts_routes, rules_routes, de_routes, report_routes
 import os
 
 app = Flask(__name__)
@@ -28,6 +28,7 @@ app.register_blueprint(alerts_routes.alert_bp)
 app.register_blueprint(user_routes.user_bp)
 app.register_blueprint(rules_routes.rule_bp)
 app.register_blueprint(de_routes.de_bp)
+app.register_blueprint(report_routes.reports_bp)
 
 
 if __name__ == '__main__':

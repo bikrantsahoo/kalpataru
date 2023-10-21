@@ -5,6 +5,7 @@ from src.constants import constants
 
 
 class AlertServices:
+    query = ""
 
     @staticmethod
     def delete_alert(alert_names):
@@ -23,6 +24,7 @@ class AlertServices:
                     print(alert_results)
                     in_clause = ",".join("'" + result + "'" for result in alert_results)
                     params = {"alert_name": in_clause}
+                    global query
                     query = load_sql_query(constants.UPDATE_ALERT_PATH, params)
                     print(query)
                     # TODO: after testing replace it with update query
