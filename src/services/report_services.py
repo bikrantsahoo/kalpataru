@@ -19,10 +19,10 @@ class ReportServices:
                 for milestone_data in milestones_data:
                     order_milestone_data = {
                         "order_number": milestone_data[0],
-                        "milestone": milestone_data[1],
-                        "error_message": milestone_data[2],
-                        "module": milestone_data[3],
-                        "t2r_id": milestone_data[4],
+                        "product_name": milestone_data[1],
+                        "created_by": milestone_data[2],
+                        "milestone": milestone_data[3],
+                        "error": milestone_data[4],
                         "created_on": milestone_data[5].strftime("%Y-%m-%d %H:%M:%S"),
                     }
                     order_milestones_data.append(order_milestone_data)

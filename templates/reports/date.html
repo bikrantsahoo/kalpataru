@@ -28,10 +28,10 @@
         <thead>
         <tr>
             <th>Order Number</th>
+            <th>Product Name</th>
+            <th>Created by</th>
             <th>Milestone</th>
-            <th>Error Message</th>
-            <th>Module</th>
-            <th>T2R Id</th>
+            <th>Error</th>
             <th>Created On</th>
         </tr>
         </thead>
@@ -39,10 +39,10 @@
         {% for milestone_data in milestones_data %}
         <tr>
             <td>{{ milestone_data.order_number }}</td>
+            <td>{{ milestone_data.product_name }}</td>
+            <td>{{ milestone_data.created_by }}</td>
             <td>{{ milestone_data.milestone }}</td>
-            <td>{{ milestone_data.error_message }}</td>
-            <td>{{ milestone_data.module }}</td>
-            <td>{{ milestone_data.t2r_id }}</td>
+            <td>{{ milestone_data.error }}</td>
             <td>{{ milestone_data.created_on }}</td>
         </tr>
         {% endfor %}
