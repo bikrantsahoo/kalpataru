@@ -4,7 +4,7 @@ from src.constants import constants
 
 
 class ReportServices:
-
+    query = ""
     def order_milestone(start_date, end_date):
         db_client = OracleDBClient(user="REPLICA")
         if db_client.connect():

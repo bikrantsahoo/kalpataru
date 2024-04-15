@@ -49,9 +49,9 @@ class DeServices:
     @staticmethod
     def get_job_histories(job_instance_id):
         db_client = OracleDBClient(user="DE_DEV")
+        query = ""
         if db_client.connect():
             print("i am here")
-            global query
             params = {"job_instance_id": job_instance_id}
             try:
                 query = load_sql_query(constants.SELECT_JOB_HISTORY_PATH, params)
@@ -61,7 +61,7 @@ class DeServices:
                 job_histories_data = []
                 for job_history in job_histories:
                     job_history_data = {
-                        "start_time": job_history[0].strftime("%Y-%m-%d %H:%M:%S"),
+                        "start_time": [job_history][0].strftime("%Y-%m-%d %H:%M:%S"),
                         "end_time": job_history[1].strftime("%Y-%m-%d %H:%M:%S"),
                         "status": job_history[2]
                     }

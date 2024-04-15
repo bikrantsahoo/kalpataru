@@ -31,7 +31,7 @@ def manage_job():
             if status:
                 flash(f"Disable {job_instance_id} successfully", constants.SUCCESS)
             else:
-                flash(f"Failed to disable job {job_instance_id} ", constants.ERROR)
+                flash(f"Failed to disable/enable job {job_instance_id} ", constants.ERROR)
     return render_template('de/disable.html', name=name, form=form)
 
 

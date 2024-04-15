@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %} Employee List - {% endblock title %}
+{% block title %} DE Job History - {% endblock title %}
 {% block body %}
 
 <link rel="stylesheet" href="{{ url_for('static', filename='css/utils.css') }}">
@@ -19,7 +19,7 @@
 
 {% if job_histories_data %}
 <div class="center">
-    <table class="table">
+    <table class="table table-bordered">
         <thead>
         <tr>
             <th>Start Date</th>

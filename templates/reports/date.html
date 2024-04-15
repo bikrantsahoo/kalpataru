@@ -1,54 +1,54 @@
-{% extends 'base.html'%}
+ca{% extends 'base.html'%}
 {% block title %} Reports  - {% endblock title %}
 {% block body %}
 
 <link rel="stylesheet" href="{{ url_for('static', filename='css/utils.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/table.css') }}">
 
 
 <div class="center">
     <form method='POST'>
 
-        <h5> select a date range </h5>
         <p>
         </p>
 
-            {{ form.csrt_token }}
-            {{ form.startdate.label }} {{form.startdate(class='datepicker')}} {{form.hidden_tag()}}
-            {{ form.enddate.label }} {{form.enddate(class='datepicker')}} {{form.hidden_tag()}}
+        {{ form.csrt_token }}
+        {{ form.startdate.label }} {{form.startdate(class='datepicker')}} {{form.hidden_tag()}}
+        {{ form.enddate.label }} {{form.enddate(class='datepicker')}} {{form.hidden_tag()}}
         <p>
-            <p>
+        <p>
             {{form.submit(class="btn btn-secondary")}}
         </p>
     </form>
 </div>
 
 {% if milestones_data %}
-<div class="center">
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Order Number</th>
-            <th>Product Name</th>
-            <th>Created by</th>
-            <th>Milestone</th>
-            <th>Error</th>
-            <th>Created On</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for milestone_data in milestones_data %}
-        <tr>
-            <td>{{ milestone_data.order_number }}</td>
-            <td>{{ milestone_data.product_name }}</td>
-            <td>{{ milestone_data.created_by }}</td>
-            <td>{{ milestone_data.milestone }}</td>
-            <td>{{ milestone_data.error }}</td>
-            <td>{{ milestone_data.created_on }}</td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-</div>
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>Order Number</th>
+        <th>Product Name</th>
+        <th>Created by</th>
+        <th>Milestone</th>
+        <th>Error</th>
+        <th>Created On</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for milestone_data in milestones_data %}
+    <tr>
+        <td>{{ milestone_data.order_number }}</td>
+        <td>{{ milestone_data.product_name }}</td>
+        <td>{{ milestone_data.created_by }}</td>
+        <td>{{ milestone_data.milestone }}</td>
+        <td>{{ milestone_data.error }}</td>
+        <td>{{ milestone_data.created_on }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
 {% endif %}
 
 
