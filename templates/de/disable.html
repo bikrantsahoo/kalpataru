@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %} DE Manage Jobs - {% endblock title %}
+{% block body %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/utils.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/toggle.css') }}">
+
+<div class="center">
+    <form method="POST">
+        {{ form.hidden_tag() }}
+
+        <label class="toggle-label" for="toggle_switch">disable</label>
+        <label class="switch">
+            <input type="checkbox" name="toggle_switch">
+            <span class="slider round"></span>
+        </label>
+        <label class="toggle-label" for="toggle_switch">enable</label>
+        <p>
+        <p>
+            {{ form.name.label(class="form-label") }}
+            {{ form.name(size=50) }}
+        </p>
+
+        {{ form.submit(class="btn btn-secondary") }}
+    </form>
+</div>
+
+{% endblock body %}

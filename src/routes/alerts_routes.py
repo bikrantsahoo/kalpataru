@@ -1,18 +1,11 @@
 from flask import Blueprint, render_template, request, flash, redirect
-from flask_wtf import FlaskForm
-from wtforms.validators import DataRequired
-from wtforms import StringField, SubmitField
+from src.routes.forms.delete_form import DeleteAlertForm
+from src.services.notitification_service import send_email
 
 from src.services.alert_services import AlertServices
+from src.constants import constants
 
 alert_bp = Blueprint("alerts", __name__)
-
-
-# creating form class
-# TODO: try to get good practice (adding separate class for forms )
-class DeleteAlertForm(FlaskForm):
-    name = StringField("Alert Name", render_kw={'placeholder': 'Enter alert name'}, validators=[DataRequired()])
-    submit = SubmitField("submit")
 
 
 @alert_bp.route("/active_alert")
@@ -27,22 +20,16 @@ def delete_alert():
     if form.validate_on_submit():
         name = form.name.data
         form.name.data = ''
-
-    print(request)
-    print(request.method)
-    if request.method == "POST":
-        req = request.form
-        alert_name = req.get("name")
-        print(alert_name)
-        if len(alert_name) <= 5:
-            flash("recheck the alert name", "warning")
-            return redirect("/delete_alert")
-
-        alert_status = AlertServices.delete_alert(alert_name=alert_name)
-        #alert_status = "danger"
-        if alert_status:
-            # ToDo: flash may not work
-            flash(f"Deleted {alert_name} successfully", "success")
-        else:
-            flash(f"Failed to delete Alert {alert_name}  ", "danger")
+        if request.method == "POST":
+            alert_names = request.form.get("name")
+            print(alert_names)
+            # TODO: check and remove this condition check after few days
+            if len(alert_names) <= constants.ALERT_SIZE:
+                flash("recheck the alert name", constants.WARNING)
+                return redirect("/delete_alert")
+            alert_status = AlertServices.delete_alert(alert_names=alert_names)
+            if alert_status:
+                flash(f"Deleted {alert_names} successfully", constants.SUCCESS)
+            else:
+                flash(f"Failed to delete Alert {alert_names} ", constants.ERROR)
     return render_template('alerts/delete.html', name=name, form=form)

@@ -1,0 +1,15 @@
+
+
+    .center {
+        display: flex;
+        justify-content: left;
+        padding-left: 20%;
+        padding-top: 0%;
+            }
+
+.my-div {
+    position: fixed;
+    justify-content: left;
+    padding-left: 20%;
+    padding-top: 0%;
+}

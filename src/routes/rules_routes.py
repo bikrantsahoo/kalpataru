@@ -1,16 +1,10 @@
-from flask import Blueprint, jsonify, render_template, request
-from flask_wtf import FlaskForm
-from wtforms.validators import DataRequired
-from wtforms import StringField, IntegerField, SubmitField
+from flask import Blueprint, render_template, request, flash, redirect
+from src.routes.forms.rule_form import RuleForm
+
+from src.services.rule_services import RuleServices
+from src.constants import constants
 
 rule_bp = Blueprint("rules", __name__)
-
-
-# creating form class
-class RuleForm(FlaskForm):
-    name = StringField("Rule Name", render_kw={'placeholder': 'Enter multiple Rule names in comma separated'},
-                       validators=[DataRequired()])
-    submit = SubmitField("submit")
 
 
 @rule_bp.route("/disable_multiple_rule", methods=["GET", "POST"])
@@ -20,17 +14,15 @@ def disable_multiple_rule():
     if form.validate_on_submit():
         name = form.name.data
         form.name.data = ''
-
+        if request.method == "POST":
+            rule_names = request.form.get("name")
+            print(rule_names)
+            if len(rule_names) <= constants.RULE_SIZE:
+                flash("recheck the rule name", constants.WARNING)
+                return redirect("/disable_multiple_rule")
+            status = RuleServices.disable_multiple_rule(rule_names=rule_names)
+            if status:
+                flash(f"Deleted  {rule_names} successfully", constants.SUCCESS)
+            else:
+                flash(f"Failed to delete rule  {rule_names} ", constants.ERROR)
     return render_template('rules/disable_rules.html', name=name, form=form)
-
-
-# @rule_bp.route("/on_disable", methods=["POST"])
-# def on_disable():
-#     form = RuleForm()
-#     if form.validate_on_submit():
-#         name = form.name.data
-#         # Perform database operation using db_service
-#         # result = db_service.execute_query("SELECT * FROM rules WHERE name = :name", name=name)
-#         # Process the result or perform other actions
-#         return 'Rules deleted successfully!'
-#     return render_template('rules/on_disable.html')

@@ -1,0 +1,1 @@
+select * from crm_cust_contact where customer_id = '$customer_id'

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %} User - {% endblock title %}
+{% block body %}
+
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/selectform.css') }}">
+
+<div class="my-div">
+    <form method="POST" action="{{ url_for('users.modify_user') }}">
+        <select name="action" id="users">
+            <option value="roles">Assign Roles</option>
+            <option value="mobile_number">Mobile Number</option>
+            <option value="email">Email</option>
+            <option value="department">Department</option>
+            <option value="delete_guest_user">Delete Guest User</option>
+        </select>
+        <input type="submit" value="Go">
+    </form>
+</div>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/utils.css') }}">
+<div class="center">
+ <form method="POST" action="/upload" enctype="multipart/form-data">
+        <input type="file" name="file">
+        <input type="submit" value="Upload">
+    </form>
+    <!--     {% if name %}-->
+    <!--    <p>Updated Mobile Number: {{ name }}</p>-->
+    <!--    {% endif %}-->
+</div>
+
+
+{% endblock body %}

@@ -14,3 +14,12 @@
 .semibold{
   font-weight: semibold;
 }
+
+.middle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10vh; /* This is to center vertically in the viewport */
+
+}
+

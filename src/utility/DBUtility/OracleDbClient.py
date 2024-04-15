@@ -1,5 +1,5 @@
 import cx_Oracle
-from src.config.ConfigUtility.config import load_db_config
+from src.config.config import load_db_config
 
 
 class OracleDBClient:
@@ -38,8 +38,9 @@ class OracleDBClient:
         try:
             cursor = self.connection.cursor()
             cursor.execute(query)
+            #TODO: is commit required
             self.connection.commit()
-            #cursor.close()
+            # cursor.close()
             return True
         except cx_Oracle.DatabaseError as e:
             print(f"Error executing query: {e}")
@@ -66,3 +67,21 @@ class OracleDBClient:
                 cursor.close()
             # if self.connection:
             #     self.connection.close()
+
+    def insert(self, query):
+        try:
+            self.execute_query(query)
+            self.connection.commit()
+            return True
+        except Exception as e:
+            print(f"insert failed: {e}")
+            return False
+
+    def update(self, query):
+        try:
+            self.execute_query(query)
+            self.connection.commit()
+            return True
+        except Exception as e:
+            print(f"update failed: {e}")
+            return False

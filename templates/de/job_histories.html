@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %} DE Job History - {% endblock title %}
+{% block body %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/utils.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/table.css') }}">
+
+<div class="center">
+    <form method="POST">
+        {{ form.hidden_tag() }}
+
+        <p>
+            {{ form.name.label(class="form-label") }}
+            {{ form.name(size=18) }}
+            <input type="submit" value="Search" class="btn btn-secondary">
+        </p>
+    </form>
+</div>
+
+{% if job_histories_data %}
+<div class="center">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for job_history in job_histories_data %}
+        <tr>
+            <td>{{ job_history.start_time }}</td>
+            <td>{{ job_history.end_time }}</td>
+            <td>{{ job_history.status }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+
+{% endblock body %}
