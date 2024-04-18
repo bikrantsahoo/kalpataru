@@ -2,6 +2,8 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for
 from src.routes.forms.mobile_form import ModifyMobileNumber
 from src.routes.forms.search_form import SearchForm
 from src.routes.forms.guest_form import GuestForm
+from src.routes.forms.pincode_form import PincodeForm
+from src.routes.forms.date_form import DateForm
 
 from src.services.user_services import UserService
 from src.constants import constants

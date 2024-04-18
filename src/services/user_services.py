@@ -124,3 +124,25 @@ class UserService:
         except Exception as e:
             print(f"Error: {str(e)}")
             return False
+
+    def add_pincode(pincode):
+        try:
+            db_client = OracleDBClient(user="REPLICA")
+            if db_client.connect():
+                params = {"pincode": pincode}
+                # TODO: need to add check , add select query and then do insert query
+                query = load_sql_query(constants.SELECT_INSERT_PINCODE, params)
+                results = db_client.fetch_results(query)
+                if results:
+                    query = load_sql_query(constants.INSERT_PINCODE, params)
+                    print(query)
+                    # db_client.execute_query(query)
+
+                db_client.disconnect()
+                return True
+            else:
+                db_client.disconnect()
+                return False
+        except Exception as e:
+            print(f"Error: {str(e)}")
+            return False
