@@ -42,6 +42,12 @@ SENDER_MAIL = "noreply-ngcp@nic.in"
 SENDER_PASSWORD = "K!qXx18%2h"
 SMTP_SERVER = "relay.nic.in"
 SMTP_PORT = 25
+ETL = '/home/sinicagent/scripts/etl.py'
+APPROVER_HIERARCHY_MAPPING_PATH = '/home/sinicagent/scripts/approver_hierarchy_mapping_report.sql'
+AHM_SUBJECT = 'NIC | approver hierarchy mapping report'
+COMPLETE_HIERARCHY_MAPPING_PATH = '/home/sinicagent/scripts/complete_hierarchy_mapping_report.sql'
+CHM_SUBJECT = 'NIC | complete hierarchy mapping report'
+
 
 
 
