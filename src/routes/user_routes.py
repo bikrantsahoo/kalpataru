@@ -105,7 +105,7 @@ def modify_name():
     if form.validate_on_submit():
         user_id = form.name.data
         users_list = UserService.get_user_name(user_id=user_id)
-        users_list = [{'user_log_id': '200000235565', 'customer_id': 'himanshu is a superman'}]
+        #users_list = [{'user_log_id': '200000235565', 'customer_id': 'himanshu is a superman'}]
         # if status:
         #     flash(f"Deleted user {user_id} successfully", constants.SUCCESS)
         # else:
@@ -145,7 +145,8 @@ def add_pincode():
             pincode = request.form.get("name")
             print(pincode)
             # TODO: check and remove this condition check after few days
-            status = UserService.add_pincode(pincode=pincode)
+            #status = UserService.add_pincode(pincode=pincode)
+            status = False
             if status:
                 flash(f"Inserted {pincode} successfully", constants.SUCCESS)
             else:
