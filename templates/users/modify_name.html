@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% block title %} Name - {% endblock title %}
+{% block body %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/selectform.css') }}">
+<!--<link rel="stylesheet" href="{{ url_for('static', filename='css/table.css') }}">-->
+
+
+<div class="my-div">
+    <form method="POST" action="{{ url_for('users.modify_user') }}">
+        <select name="action" id="users">
+            <option value="modify_name">Name</option>
+            <option value="delete_guest_user">Delete Guest User</option>
+            <option value="mobile_number">Mobile Number</option>
+            <option value="email">Email</option>
+            <option value="department">Department</option>
+            <option value="roles">Assign Roles</option>
+        </select>
+        <input type="submit" value="Go">
+    </form>
+</div>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/utils.css') }}">
+<div class="center">
+    <!--    <form method="POST" action="{{ url_for('users.delete_guest_user') }}">-->
+    <form method="POST" action="{{ url_for('users.modify_name') }}">
+        {{ form.hidden_tag() }}
+        <p>
+            {{form.name.label(class="form-label")}}
+            {{form.name(size=40)}}
+        </p>
+        {{form.submit(class="btn btn-secondary")}}
+    </form>
+</div>
+
+<p>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/table.css') }}">
+    {% if users_list %}
+<div class="center">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>User Login Id</th>
+            <th>Customer Id</th>
+            <th>Update</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users_list %}
+        <tr id="{{ user.customer_id }}">
+            <td>{{ user.user_log_id }}</td>
+            <td>{{ user.customer_id }}</td>
+            <td>
+                <input type="checkbox" class="update-checkbox" data-user-id="{{ user.customer_id }}">
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+<!-- Hidden form for updating user's name -->
+
+
+<div class="center">
+<!--    <form method="POST" action="{{ url_for('users.update_name') }}" id="update-form" style="display: none;">-->
+<!--        <table>-->
+<!--            <tr>-->
+<!--                <td><label for="first_name">First Name:</label></td>-->
+<!--                <td><input type="text" name="first_name" id="first_name" class="form-control"></td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td><label for="last_name">Last Name:</label></td>-->
+<!--                <td><input type="text" name="last_name" id="last_name" class="form-control"></td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td><label for="full_name">Full Name:</label></td>-->
+<!--                <td><input type="text" name="full_name" id="full_name" class="form-control"></td>-->
+<!--            </tr>-->
+<!--        </table>-->
+<!--        <input type="submit" value="Submit" class="btn btn-secondary">-->
+<!--    </form>-->
+<form method="POST" action="{{ url_for('users.update_name') }}" id="update-form" style="display: none;">
+    <input type="hidden" name="customer_id" id="customer_id"> <!-- Hidden input field for customer_id -->
+    <table>
+        <tr>
+            <td><label for="first_name">First Name:</label></td>
+            <td><input type="text" name="first_name" id="first_name" class="form-control"></td>
+        </tr>
+        <tr>
+            <td><label for="middle_name">Middle Name:</label></td>
+            <td><input type="text" name="middle_name" id="middle_name" class="form-control"></td>
+        </tr>
+        <tr>
+            <td><label for="last_name">Last Name:</label></td>
+            <td><input type="text" name="last_name" id="last_name" class="form-control"></td>
+        </tr>
+    </table>
+    <input type="submit" value="Submit" class="btn btn-secondary">
+</form>
+</div>
+
+
+<script>
+<!--    document.addEventListener("DOMContentLoaded", function() {-->
+<!--        var updateCheckboxes = document.querySelectorAll(".update-checkbox");-->
+<!--        var updateForm = document.getElementById("update-form");-->
+
+<!--        updateCheckboxes.forEach(function(checkbox) {-->
+<!--            checkbox.addEventListener("change", function() {-->
+<!--                if (this.checked) {-->
+<!--                    updateForm.style.display = "block";-->
+<!--                } else {-->
+<!--                    updateForm.style.display = "none";-->
+<!--                }-->
+<!--            });-->
+<!--        });-->
+<!--    });-->
+document.addEventListener("DOMContentLoaded", function() {
+    var updateCheckboxes = document.querySelectorAll(".update-checkbox");
+    var updateForm = document.getElementById("update-form");
+    var customerIdInput = document.getElementById("customer_id"); // Hidden input field for customer_id
+
+    updateCheckboxes.forEach(function(checkbox) {
+        checkbox.addEventListener("change", function() {
+            if (this.checked) {
+                updateForm.style.display = "block";
+                // Set the value of hidden input field to the selected customer_id
+                customerIdInput.value = this.dataset.userId;
+            } else {
+                updateForm.style.display = "none";
+                // Clear the value of hidden input field when checkbox is unchecked
+                customerIdInput.value = "";
+            }
+        });
+    });
+});
+
+</script>
+
+{% endblock body %}

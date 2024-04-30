@@ -9,8 +9,13 @@ UPDATE_ALERT_PATH = "src/sql/update/update_alert.sql"
 UPDATE_DE_DISABLE_PATH = "src/sql/update/update_de_disable.sql"
 UPDATE_MOB_NUM_PATH = "src/sql/update/update_mob_num.sql"
 UPDATE_GUEST_USER = "src/sql/update/update_guest_user.sql"
+UPDATE_NAME1 = "src/sql/update/update_name1.sql"
+UPDATE_NAME2 = "src/sql/update/update_name2.sql"
+INSERT_PINCODE = "src/sql/insert/insert_pincode.sql"
 SELECT_GUEST_USER = "src/sql/select/select_guest_user.sql"
+SELECT_USER_NAME = "src/sql/select/select_user_name.sql"
 SELECT_DE_DISABLE_PATH = "src/sql/select/select_de_disable.sql"
+SELECT_INSERT_PINCODE = "src/sql/select/select_insert_pincode.sql"
 ALERT_SIZE = 5
 RULE_SIZE = 5
 MAX_ALERT_ALLOWED = 10
@@ -30,12 +35,19 @@ EMAIL = "email"
 DEPARTMENT = "department"
 ROLES = "roles"
 DELETE_GUEST_USER = "delete_guest_user"
+NAME = "name"
 RECIPIENT_MAIL = "somashekhar1.h@ril.com"
 ALERT_MAIL_SUBJECT = "Alert deleted {}"
 SENDER_MAIL = "noreply-ngcp@nic.in"
 SENDER_PASSWORD = "K!qXx18%2h"
 SMTP_SERVER = "relay.nic.in"
 SMTP_PORT = 25
+ETL = '/home/sinicagent/scripts/etl.py'
+APPROVER_HIERARCHY_MAPPING_PATH = '/home/sinicagent/scripts/approver_hierarchy_mapping_report.sql'
+AHM_SUBJECT = 'NIC | approver hierarchy mapping report'
+COMPLETE_HIERARCHY_MAPPING_PATH = '/home/sinicagent/scripts/complete_hierarchy_mapping_report.sql'
+CHM_SUBJECT = 'NIC | complete hierarchy mapping report'
+
 
 
 
