@@ -112,10 +112,10 @@ class UserService:
                           "last_name": last_name}
                 query = load_sql_query(constants.UPDATE_NAME1, params)
                 print(query)
-                # db_client.execute_query(query)
+                db_client.execute_query(query)
                 query = load_sql_query(constants.UPDATE_NAME2, params)
                 print(query)
-                # db_client.execute_query(query)
+                db_client.execute_query(query)
                 db_client.disconnect()
                 return True
             else:

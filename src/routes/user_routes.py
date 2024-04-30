@@ -224,7 +224,7 @@ def complete_hierarchy_mapping():
             # print(emails_str)
             # print(emails)
             result = subprocess.run(["python3", constants.ETL, constants.COMPLETE_HIERARCHY_MAPPING_PATH
-                                        , email_string_list, constants.CHM_SUBJECT], stdout=subprocess.PIPE,
+                                        ,constants.CHM_SUBJECT, email_string_list, ], stdout=subprocess.PIPE,
                                     stderr=subprocess.PIPE)
             # result = subprocess.run(["python3", "/Users/somashekhar/Downloads/scripts/my_script.py",constants.CHM_SUBJECT,email_list ],
             #                         capture_output=True, text=True)
