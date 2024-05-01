@@ -13,7 +13,7 @@ def active_alert():
     return render_template('alerts/alerts.html')
 
 
-@alert_bp.route("/delete_alert", methods=["GET", "POST"])
+@alert_bp.route("/disable_alert", methods=["GET", "POST"])
 def delete_alert():
     name = None
     form = DeleteAlertForm()
@@ -26,7 +26,7 @@ def delete_alert():
             # TODO: check and remove this condition check after few days
             if len(alert_names) <= constants.ALERT_SIZE:
                 flash("recheck the alert name", constants.WARNING)
-                return redirect("/delete_alert")
+                return redirect("/disable_alert")
             alert_status = AlertServices.delete_alert(alert_names=alert_names)
             if alert_status:
                 flash(f"Disabled {alert_names} successfully", constants.SUCCESS)
