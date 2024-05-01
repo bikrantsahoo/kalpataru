@@ -154,10 +154,10 @@ class UserService:
                 params = {"old_mail_id": old_mail_id, "new_email_id": new_email_id}
                 query = load_sql_query(constants.UPDATE_EMAIL1, params)
                 print(query)
-                #db_client.execute_query(query)
+                db_client.execute_query(query)
                 query = load_sql_query(constants.UPDATE_EMAIL2, params)
                 print(query)
-                #db_client.execute_query(query)
+                db_client.execute_query(query)
                 db_client.disconnect()
                 return True
             else:
