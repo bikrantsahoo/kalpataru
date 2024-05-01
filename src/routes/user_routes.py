@@ -33,12 +33,14 @@ def modify_user():
             form = SearchForm()
             return render_template('users/modify_name.html',
                                    name=None, form=form)
-        if selected_action == constants.ROLES:
-            return render_template('users/modify_roles.html')
+        # if selected_action == constants.ROLES:
+        #     return render_template('users/modify_roles.html')
         if selected_action == constants.EMAIL:
-            return render_template('users/modify_email.html')
-        if selected_action == constants.DEPARTMENT:
-            return render_template('users/modify_department.html')
+            form = GuestForm()
+            return render_template('users/modify_email.html',
+                                   name=None, form=form)
+        # if selected_action == constants.DEPARTMENT:
+        #     return render_template('users/modify_department.html')
     return render_template('users/modify_user.html')
 
 
@@ -69,7 +71,7 @@ def delete_guest_user():
     if form.validate_on_submit():
         user_id = form.name.data
         users_list = UserService.get_user_list(user_id=user_id)
-        # users_list = [{'user_login_id': '200000235565', 'customer_id': 'SUSE 15.4 - M1 Small (2vCPU 4 GB RAM)',
+        # users_list = [{'user_log_id': '200000235565', 'customer_id': 'SUSE 15.4 - M1 Small (2vCPU 4 GB RAM)',
         #                'status': 'bharat1.agarwal@ril.com', 'action_type_code': 'Provisioning',
         #                'error': 'Exception({\'message\': \'AssertionError\', \'output\': ["An error occurred while opening the clustered role \'testsusebh999\'.\\nScript Failed:- VM: testsusebh999 doesn\'t exist..Exception.InnerException.Message"]})',
         #                'created_on': '2023-10-20 18:48:08'}]
@@ -95,6 +97,34 @@ def delete_users():
     # user_id = request.args.get('user_id')
     return redirect('/delete_guest_user')
 
+@user_bp.route("/modify_email", methods=['GET', 'POST'])
+def modify_email():
+    users_list = []
+    form = GuestForm()
+    # user_id = request.args.get('user_id')
+    if form.validate_on_submit():
+        user_id = form.name.data
+        users_list = UserService.get_user_name(user_id=user_id)
+        users_list = [{'user_log_id': 'somu@ril.com', 'customer_id': 'SUSE 15.4 - M1 Small (2vCPU 4 GB RAM)',
+                       'status': 'bharat1.agarwal@ril.com', 'action_type_code': 'Provisioning',
+                       'error': 'Exception({\'message\': \'AssertionError\', \'output\': ["An error occurred while opening the clustered role \'testsusebh999\'.\\nScript Failed:- VM: testsusebh999 doesn\'t exist..Exception.InnerException.Message"]})',
+                       'created_on': '2023-10-20 18:48:08'}]
+    return render_template('users/modify_email.html', form=form, users_list=users_list)
+
+@user_bp.route("/update_email", methods=["POST"])
+def update_email():
+    # if request.method == "POST":
+    new_email_id = request.form['new_email']
+    old_mail_id = request.form['customer_id']
+    print(new_email_id)
+    print(old_mail_id)
+    status = UserService.update_email(old_mail_id=old_mail_id, new_email_id=new_email_id)
+    status = True
+    if status:
+        flash(f"Updated email successfully", constants.SUCCESS)
+    else:
+        flash(f"Failed to update email  ", constants.ERROR)
+    return redirect('/modify_email')
 
 @user_bp.route("/modify_name", methods=['GET', 'POST'])
 def modify_name():
@@ -154,7 +184,7 @@ def add_pincode():
     return render_template('alerts/delete.html', name=name, form=form)
 
 
-@user_bp.route("/approver_hierarchy_mapping", methods=["GET", "POST"])
+@user_bp.route("/approver_dump", methods=["GET", "POST"])
 def approver_hierarchy_mapping():
     name = None
     form = UserMailForm()
