@@ -3,19 +3,101 @@
 {% block body %}
 
 
-<div class="container">
-    <div class="form-container">
-        <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">Email address</label>
-            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="som@example.com">
-        </div>
-        <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
-            <textarea class="form-control form-textarea" id="exampleFormControlTextarea1" rows="3"></textarea>
-        </div>
-        <button class="btn">Submit</button>
-    </div>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/selectform.css') }}">
+<!--<link rel="stylesheet" href="{{ url_for('static', filename='css/table.css') }}">-->
+
+<div class="my-div">
+    <form method="POST" action="{{ url_for('users.modify_user') }}">
+        <select name="action" id="users">
+            <option value="email">Email</option>
+            <option value="delete_guest_user">Delete Guest User</option>
+            <option value="mobile_number">Mobile Number</option>
+<!--            <option value="department">Department</option>-->
+<!--            <option value="roles">Assign Roles</option>-->
+            <option value="name">Name</option>
+        </select>
+        <input type="submit" value="Go">
+    </form>
 </div>
 
+<link rel="stylesheet" href="{{ url_for('static', filename='css/utils.css') }}">
+<div class="center">
+    <form method="POST" action="{{ url_for('users.modify_email') }}">
+        {{ form.hidden_tag() }}
+        <p>
+            {{form.name.label(class="form-label")}}
+            {{form.name(size=40)}}
+        </p>
+        {{form.submit(class="btn btn-secondary")}}
+    </form>
+</div>
+
+<p>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/table.css') }}">
+    {% if users_list %}
+<div class="center">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>User Login Id</th>
+            <th>Customer Id</th>
+            <th>Update</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users_list %}
+        <tr id="{{ user.customer_id }}">
+            <td>{{ user.user_log_id }}</td>
+            <td>{{ user.customer_id }}</td>
+            <td>
+                <input type="checkbox" class="update-checkbox" data-user-id="{{ user.customer_id }}">
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+<!-- Hidden form for updating user's name -->
+
+
+<div class="center">
+<form method="POST" action="{{ url_for('users.update_email') }}" id="update-form" style="display: none;">
+    <input type="hidden" name="customer_id" id="customer_id"> <!-- Hidden input field for customer_id -->
+    <table>
+        <tr>
+            <td><label for="new_email">New Email Id:</label></td>
+            <td><input type="text" name="new_email" id="new_email" class="form-control"></td>
+        </tr>
+    </table>
+    <input type="submit" value="Submit" class="btn btn-secondary">
+</form>
+</div>
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function() {
+    var updateCheckboxes = document.querySelectorAll(".update-checkbox");
+    var updateForm = document.getElementById("update-form");
+    var customerIdInput = document.getElementById("customer_id");
+
+    updateCheckboxes.forEach(function(checkbox) {
+        checkbox.addEventListener("change", function() {
+            if (this.checked) {
+                updateForm.style.display = "block";
+                // Set the value of hidden input field to the selected user_log_id
+                customerIdInput.value = this.dataset.userId;
+            } else {
+                updateForm.style.display = "none";
+                // Clear the value of hidden input field when checkbox is unchecked
+                customerIdInput.value = "";
+            }
+        });
+    });
+});
+
+</script>
 
 {% endblock body %}

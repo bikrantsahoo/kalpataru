@@ -29,7 +29,7 @@ def delete_alert():
                 return redirect("/delete_alert")
             alert_status = AlertServices.delete_alert(alert_names=alert_names)
             if alert_status:
-                flash(f"Deleted {alert_names} successfully", constants.SUCCESS)
+                flash(f"Disabled {alert_names} successfully", constants.SUCCESS)
             else:
-                flash(f"Failed to delete Alert {alert_names} ", constants.ERROR)
+                flash(f"Failed to disable Alert {alert_names} ", constants.ERROR)
     return render_template('alerts/delete.html', name=name, form=form)

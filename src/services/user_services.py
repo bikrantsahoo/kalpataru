@@ -146,3 +146,23 @@ class UserService:
         except Exception as e:
             print(f"Error: {str(e)}")
             return False
+
+    def update_email(old_mail_id,new_email_id ):
+        try:
+            db_client = OracleDBClient(user="REPLICA")
+            if db_client.connect():
+                params = {"old_mail_id": old_mail_id, "new_email_id": new_email_id}
+                query = load_sql_query(constants.UPDATE_EMAIL1, params)
+                print(query)
+                #db_client.execute_query(query)
+                query = load_sql_query(constants.UPDATE_EMAIL2, params)
+                print(query)
+                #db_client.execute_query(query)
+                db_client.disconnect()
+                return True
+            else:
+                db_client.disconnect()
+                return False
+        except Exception as e:
+            print(f"Error: {str(e)}")
+            return False
