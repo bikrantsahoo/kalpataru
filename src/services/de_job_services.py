@@ -60,9 +60,18 @@ class DeServices:
                 job_histories = db_client.fetch_results(query)
                 job_histories_data = []
                 for job_history in job_histories:
+                    if job_history[0] is not None:
+                        formatted_start_time = job_history[0].strftime("%Y-%m-%d %H:%M:%S"),
+                    else:
+                        formatted_start_time = None
+                    if job_history[1] is not None:
+                        formatted_end_time = job_history[1].strftime("%Y-%m-%d %H:%M:%S"),
+                    else:
+                        formatted_end_time = None
+
                     job_history_data = {
-                        "start_time": job_history[0].strftime("%Y-%m-%d %H:%M:%S"),
-                        "end_time": job_history[1].strftime("%Y-%m-%d %H:%M:%S"),
+                        "start_time": formatted_start_time,
+                        "end_time": formatted_end_time,
                         "status": job_history[2]
                     }
                     job_histories_data.append(job_history_data)
