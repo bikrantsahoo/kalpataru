@@ -4,14 +4,13 @@
 
 
 <link rel="stylesheet" href="{{ url_for('static', filename='css/selectform.css') }}">
+<!--<link rel="stylesheet" href="{{ url_for('static', filename='css/table.css') }}">-->
 
 <div class="my-div">
     <form method="POST" action="{{ url_for('users.modify_user') }}">
         <select name="action" id="users">
             <option value="mobile_number">Mobile Number</option>
             <option value="email">Email</option>
-<!--            <option value="department">Department</option>-->
-<!--            <option value="roles">Assign Roles</option>-->
             <option value="delete_guest_user">Delete Guest User</option>
             <option value="name">Name</option>
         </select>
@@ -26,17 +25,89 @@
         <p>
             {{form.name.label(class="form-label")}}
             {{form.name(size=40)}}
-            <br>
-            {{form.mobile_number.label(class="form-label")}}
-            {{form.mobile_number(size=40)}}
-
         </p>
         {{form.submit(class="btn btn-secondary")}}
     </form>
-    <!--     {% if name %}-->
-    <!--    <p>Updated Mobile Number: {{ name }}</p>-->
-    <!--    {% endif %}-->
 </div>
 
+<p>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/table.css') }}">
+    {% if users_list %}
+<div class="center">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>User Login Id</th>
+            <th>Customer Id</th>
+            <th>Update</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users_list %}
+        <tr id="{{ user.customer_id }}">
+            <td>{{ user.user_log_id }}</td>
+            <td>{{ user.customer_id }}</td>
+            <td>
+                <input type="checkbox" class="update-checkbox" data-user-id="{{ user.customer_id }}">
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+<!-- Hidden form for updating user's name -->
+
+
+<div class="center">
+<form method="POST" action="{{ url_for('users.update_mobile_number') }}" id="update-form" style="display: none;">
+    <input type="hidden" name="customer_id" id="customer_id"> <!-- Hidden input field for customer_id -->
+    <table>
+        <tr>
+            <td><label for="new_mobile_number">New Mobile Number:</label></td>
+            <td><input type="text" name="new_mobile_number" id="new_mobile_number" class="form-control">
+<!--                required min="1000000000" max="9999999999"></td>-->
+        </tr>
+    </table>
+    <input type="submit" value="Submit" class="btn btn-secondary">
+</form>
+</div>
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function() {
+    var updateCheckboxes = document.querySelectorAll(".update-checkbox");
+    var updateForm = document.getElementById("update-form");
+    var customerIdInput = document.getElementById("customer_id");
+
+    updateCheckboxes.forEach(function(checkbox) {
+        checkbox.addEventListener("change", function() {
+            if (this.checked) {
+                updateForm.style.display = "block";
+                // Set the value of hidden input field to the selected user_log_id
+                customerIdInput.value = this.dataset.userId;
+            } else {
+                updateForm.style.display = "none";
+                // Clear the value of hidden input field when checkbox is unchecked
+                customerIdInput.value = "";
+            }
+        });
+    });
+
+            // Custom validation for mobile number field
+        var mobileNumberInput = document.getElementById("new_mobile_number");
+        mobileNumberInput.addEventListener("input", function() {
+            var value = this.value.trim();
+            if (value !== "" && (isNaN(value) || value.length !== 10)) {
+                this.setCustomValidity("Mobile number must be a 10-digit integer.");
+            } else {
+                this.setCustomValidity("");
+            }
+        });
+});
+
+</script>
 
 {% endblock body %}

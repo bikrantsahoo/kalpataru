@@ -1,5 +1,4 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from src.routes.forms.mobile_form import ModifyMobileNumber
 from src.routes.forms.search_form import SearchForm
 from src.routes.forms.guest_form import GuestForm
 from src.routes.forms.user_mail_form import UserMailForm
@@ -22,9 +21,9 @@ def modify_user():
     if request.method == 'POST':
         selected_action = request.form['action']
         if selected_action == constants.MOBILE_NUMBER:
-            form = ModifyMobileNumber()
+            form = GuestForm()
             return render_template('users/modify_mobile_number.html',
-                                   name=None, mobile_number=None, form=form)
+                                   name=None, form=form)
         if selected_action == constants.DELETE_GUEST_USER:
             form = GuestForm()
             return render_template('users/delete_guest_user.html',
@@ -44,24 +43,37 @@ def modify_user():
     return render_template('users/modify_user.html')
 
 
-@user_bp.route("/modify_mobile_number", methods=["POST"])
+@user_bp.route("/modify_mobile_number", methods=["POST", "GET"])
 def modify_mobile_number():
-    customer_id = None
-    mobile_number = None
-    form = ModifyMobileNumber()
+    users_list = []
+    form = GuestForm()
     if form.validate_on_submit():
-        customer_id = form.name.data
-        mobile_number = form.mobile_number.data
-        form.name.data = ''
-        form.mobile_number.data = ''
-        status = UserService.modify_mobile_number(customer_id, mobile_number)
-        if status:
-            flash(f"Updated  mobile number successfully", constants.SUCCESS)
-        else:
-            flash(f"Failed to updated number for user  {customer_id} ", constants.ERROR)
-    return render_template('users/modify_mobile_number.html',
-                           name=customer_id, mobile_number=mobile_number, form=form)
+        user_id = form.name.data
+        #users_list = UserService.get_user_name(user_id=user_id)
+        users_list = [{'user_log_id': 'somu@ril.com', 'customer_id': 'SUSE 15.4 - M1 Small (2vCPU 4 GB RAM)',
+                       'status': 'bharat1.agarwal@ril.com', 'action_type_code': 'Provisioning',
+                       'error': 'Exception({\'message\': \'AssertionError\', \'output\': ["An error occurred while opening the clustered role \'testsusebh999\'.\\nScript Failed:- VM: testsusebh999 doesn\'t exist..Exception.InnerException.Message"]})',
+                       'created_on': '2023-10-20 18:48:08'}]
+    return render_template('users/modify_mobile_number.html', form=form, users_list=users_list)
 
+@user_bp.route("/update_mobile_number", methods=["POST"])
+def update_mobile_number():
+    # if request.method == "POST":
+    new_mobile_number = request.form['new_mobile_number']
+    customer_id = request.form['customer_id']
+    print(len(new_mobile_number))
+    print(len(new_mobile_number))
+
+    if len(new_mobile_number) == 0:
+        flash(f"Check mobile number", constants.WARNING)
+        return redirect("/modify_mobile_number")
+    status = UserService.update_mobile_number(customer_id=customer_id,new_mobile_number=new_mobile_number)
+    status = True
+    if status:
+        flash(f"Updated email successfully", constants.SUCCESS)
+    else:
+        flash(f"Failed to update email  ", constants.ERROR)
+    return redirect('/modify_mobile_number')
 
 @user_bp.route("/delete_guest_user", methods=['GET', 'POST'])
 def delete_guest_user():
@@ -105,10 +117,10 @@ def modify_email():
     if form.validate_on_submit():
         user_id = form.name.data
         users_list = UserService.get_user_name(user_id=user_id)
-        users_list = [{'user_log_id': 'somu@ril.com', 'customer_id': 'SUSE 15.4 - M1 Small (2vCPU 4 GB RAM)',
-                       'status': 'bharat1.agarwal@ril.com', 'action_type_code': 'Provisioning',
-                       'error': 'Exception({\'message\': \'AssertionError\', \'output\': ["An error occurred while opening the clustered role \'testsusebh999\'.\\nScript Failed:- VM: testsusebh999 doesn\'t exist..Exception.InnerException.Message"]})',
-                       'created_on': '2023-10-20 18:48:08'}]
+        # users_list = [{'user_log_id': 'somu@ril.com', 'customer_id': 'SUSE 15.4 - M1 Small (2vCPU 4 GB RAM)',
+        #                'status': 'bharat1.agarwal@ril.com', 'action_type_code': 'Provisioning',
+        #                'error': 'Exception({\'message\': \'AssertionError\', \'output\': ["An error occurred while opening the clustered role \'testsusebh999\'.\\nScript Failed:- VM: testsusebh999 doesn\'t exist..Exception.InnerException.Message"]})',
+        #                'created_on': '2023-10-20 18:48:08'}]
     return render_template('users/modify_email.html', form=form, users_list=users_list)
 
 @user_bp.route("/update_email", methods=["POST"])

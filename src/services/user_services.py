@@ -166,3 +166,20 @@ class UserService:
         except Exception as e:
             print(f"Error: {str(e)}")
             return False
+
+    def update_mobile_number(customer_id,new_mobile_number):
+        try:
+            db_client = OracleDBClient(user="REPLICA")
+            if db_client.connect():
+                params = {"customer_id": customer_id,"new_mobile_number": new_mobile_number}
+                query = load_sql_query(constants.UPDATE_MOB_NUM_PATH, params)
+                print(query)
+                #db_client.execute_query(query)
+                db_client.disconnect()
+                return True
+            else:
+                db_client.disconnect()
+                return False
+        except Exception as e:
+            print(f"Error: {str(e)}")
+            return False
