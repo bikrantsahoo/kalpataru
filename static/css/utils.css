@@ -23,3 +23,18 @@
 
 }
 
+
+.anothercenter {
+  display: flex;
+  justify-content: left;
+  padding-left: 12%;
+  padding-top: ;
+
+}
+
+    .card-fixed {
+        height: 300px; /* Fixed height for the card */
+        width: 100%; /* Full width within the column */
+        overflow-y: auto; /* Scroll if content overflows */
+    }
+

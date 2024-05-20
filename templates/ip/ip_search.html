@@ -1,0 +1,96 @@
+{% extends 'base.html'%}
+{% block title %} Reports - {% endblock title %}
+{% block body %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/utils.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/table.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/utils.css') }}">
+
+
+<div class="center">
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.name.label(class="form-label") }}
+            {{ form.name(size=18) }}
+            <input type="submit" value="Search" class="btn btn-secondary">
+        </p>
+    </form>
+</div>
+
+{% if json_data %}
+    <div class="anothercenter">
+        <select id="jsonDataSelect" onchange="showCards()">
+            {% for index in range(num_items) %}
+                <option value="{{ index }}">Host : {{ json_data[index].name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <br>
+
+    <script>
+
+
+        function showCards() {
+            var selectElement = document.getElementById("jsonDataSelect");
+            var selectedIndex = selectElement.value;
+            var selectedData = {{ json_data | safe }}[selectedIndex];
+            var cardsContainer = document.getElementById("cardsContainer");
+            cardsContainer.innerHTML = ''; // Clear previous cards
+
+            var cardHtml = `
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="card border-dark shadow card-fixed">
+                            <div class="card-header">Network Interface</div>
+                            <div class="card-body">
+                                <p class="card-text">IP Address: ${selectedData.ip_address}</p>
+                                <p class="card-text">Status: ${selectedData.rn_status}</p>
+                                <p class="card-text">Resource Type Id: ${selectedData.resource_type_id}</p>
+                                <p class="card-text">Created_on: ${selectedData.created_on}</p>
+                                <p class="card-text">Updated On: ${selectedData.updated_on}</p>
+                                <p class="card-text">Updated By: ${selectedData.updated_by}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card border-dark shadow card-fixed">
+                            <div class="card-header">Asset Master</div>
+                            <div class="card-body">
+                                <p class="card-text">Name: ${selectedData.name}</p>
+                                <p class="card-text">Asset Id: ${selectedData.asset_id}</p>
+                                <p class="card-text">Project Id: ${selectedData.project_id}</p>
+                                <p class="card-text">Item Price: ${selectedData.item_price}</p>
+                                <p class="card-text">Status: ${selectedData.status}</p>
+                                <p class="card-text">Enabled: ${selectedData.enabled}</p>
+                                <p class="card-text">Hostname: ${selectedData.hostname}</p>
+                                <p class="card-text">Order Id: ${selectedData.order_id}</p>
+                                <p class="card-text">Provisioned By: ${selectedData.provisioned_by}</p>
+                                <p class="card-text">Updated On: ${selectedData.hpm_updated_on}</p>
+                                <p class="card-text">Enabled: ${selectedData.enabled}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card border-dark shadow card-fixed">
+                            <div class="card-header">Project Details</div>
+                            <div class="card-body">
+                                <p class="card-text">Project Name: ${selectedData.proj_name}</p>
+                                <p class="card-text">Project Desc: ${selectedData.project_desc}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            cardsContainer.innerHTML = cardHtml;
+            cardsContainer.style.display = "block"; // Show cards
+        }
+    </script>
+{% endif %}
+
+<div id="cardsContainer" style="display: none;">
+    <!-- Cards will be populated here based on the selected index -->
+</div>
+
+{% endblock %}
