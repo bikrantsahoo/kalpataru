@@ -174,7 +174,7 @@ class UserService:
                 params = {"customer_id": customer_id,"new_mobile_number": new_mobile_number}
                 query = load_sql_query(constants.UPDATE_MOB_NUM_PATH, params)
                 print(query)
-                #db_client.execute_query(query)
+                db_client.execute_query(query)
                 db_client.disconnect()
                 return True
             else:
